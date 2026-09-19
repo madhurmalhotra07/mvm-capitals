@@ -1,0 +1,379 @@
+<style>
+.ham-btn{display:none;flex-direction:column;justify-content:center;gap:5px;width:38px;height:38px;background:none;border:none;cursor:pointer;padding:6px;margin-left:6px}
+.ham-btn span{display:block;width:22px;height:2px;background:var(--ink);transition:all .3s;transform-origin:center}
+.ham-btn.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+.ham-btn.open span:nth-child(2){opacity:0}
+.ham-btn.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+.mob-menu{display:none;position:fixed;inset:0;background:var(--bg);z-index:9999;flex-direction:column;padding:0 32px 40px;overflow-y:auto}
+.mob-menu.open{display:flex}
+.mob-top{display:flex;align-items:center;justify-content:space-between;padding:20px 0 32px}
+.mob-brand{font-size:18px;font-weight:800;letter-spacing:-.03em;color:var(--ink)}
+.mob-x{background:none;border:none;font-size:26px;color:var(--ink);cursor:pointer;line-height:1;padding:6px;width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:50%}
+.mob-links{display:flex;flex-direction:column}
+.mob-links a{font-size:26px;font-weight:700;color:var(--ink);text-decoration:none;padding:16px 0;border-bottom:1px solid var(--line);letter-spacing:-.02em;display:block}
+.mob-links a.mob-enquire{border:none;margin-top:24px;background:var(--ink);color:var(--bg)!important;border-radius:100px;padding:16px 32px;text-align:center;font-size:16px;font-weight:600}
+@media(max-width:768px){.nav-links,.nav>.pill.cta{display:none!important}.ham-btn{display:flex!important}}
+</style>
+
+<meta charset="utf-8"><title>MVM Capital Advisors</title><meta name="description" content="Cross-border real estate &amp; advisory solutions — structuring capital, building partnerships, and delivering value for real estate and investment stakeholders across the UAE, UK, and India."><meta property="og:title" content="MVM Capital Advisors"><meta property="og:description" content="Cross-border real estate &amp; advisory solutions across the UAE, UK, and India."><meta property="og:type" content="website"><meta property="og:url" content="https://mvmcapitals.in/"><link rel="icon" type="image/svg+xml" href="assets/favicon.svg"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="preconnect" href="https://fonts.googleapis.com/"><link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;display=swap"> <style>
+/* ============================================================
+   MVM CAPITAL ADVISORS — Daylight
+   ============================================================ */
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; font-family:"Instrument Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  background:#FFFFFF; color:#0A0A0C; overflow-x:hidden;
+}
+:root{
+  --bg:#FFFFFF; --ink:#0A0A0C; --dim:#70737A; --soft:#F4F5F7; --line:#E7E8EB;
+  --pill:#0A0A0C; --pill-fg:#FFFFFF; --acc:#0A0A0C;
+  --dark:#0C0D10; --dark-fg:#F5F5F3; --dark-dim:#9EA0A6;
+}
+img,video{max-width:100%; display:block}
+a{color:inherit}
+:focus-visible{outline:2px solid currentColor; outline-offset:3px}
+
+/* ---------- nav ---------- */
+.nav{
+  position:fixed; inset:0 0 auto 0; z-index:900; height:64px;
+  display:flex; align-items:center; padding:0 clamp(18px,3vw,36px);
+  transition:background .35s ease, box-shadow .35s ease;
+}
+.nav.scrolled{background:rgba(255,255,255,.84); backdrop-filter:blur(18px) saturate(150%); box-shadow:0 1px 0 var(--line)}
+.nav .mark{font-weight:700; font-size:21px; letter-spacing:-.04em; text-decoration:none}
+.nav .mark span{color:var(--dim); font-weight:500}
+.nav-links{position:absolute; left:50%; transform:translateX(-50%); display:flex; gap:26px}
+.nav-links a{font-size:14.5px; font-weight:500; text-decoration:none; opacity:.82; transition:opacity .2s; padding:6px 0}
+.nav-links a:hover{opacity:1}
+.nav-links a.on{opacity:1; box-shadow:0 2px 0 var(--ink)}
+.nav .cta{margin-left:auto}
+.pill{
+  display:inline-flex; align-items:center; gap:9px;
+  background:var(--pill); color:var(--pill-fg);
+  font-size:14.5px; font-weight:600; letter-spacing:-.01em;
+  padding:12px 22px; border-radius:999px; text-decoration:none; border:0; cursor:pointer;
+  transition:transform .25s cubic-bezier(.2,.7,.3,1), box-shadow .25s;
+}
+.pill:hover{transform:scale(1.035); box-shadow:0 10px 30px -12px rgba(0,0,0,.35)}
+.pill .arr{transition:transform .25s cubic-bezier(.2,.7,.3,1)}
+.pill:hover .arr{transform:translateX(3px)}
+.pill.ghost{background:transparent; color:var(--ink); border:1.5px solid var(--ink)}
+@media (max-width:900px){ .nav-links{display:none} }
+
+/* ---------- shared scaffold ---------- */
+.wrap{max-width:1290px; margin:0 auto; padding:0 clamp(20px,3.5vw,40px)}
+.sec{padding:clamp(80px,12vh,150px) 0}
+.label{display:flex; align-items:center; gap:10px; font-size:15px; font-weight:600; letter-spacing:-.01em; margin:0 0 clamp(26px,4vh,44px)}
+.label::before{content:""; width:7px; height:7px; border-radius:50%; background:var(--acc)}
+h1.h,h2.h{font-size:clamp(34px,3.9vw,56px); font-weight:500; letter-spacing:-.04em; line-height:1.06; margin:0; text-wrap:balance}
+.h .ghosted{color:var(--dim)}
+.lede{font-size:clamp(16px,1.35vw,19px); line-height:1.55; color:var(--dim); max-width:56ch; margin:22px 0 0}
+.lede b{color:var(--ink); font-weight:600}
+.js .rv{opacity:0; transform:translateY(22px); will-change:transform,opacity}
+.js .rv.in{opacity:1; transform:none; transition:opacity .9s cubic-bezier(.16,1,.3,1), transform .95s cubic-bezier(.16,1,.3,1)}
+
+/* ---------- hero sequence: video sky → tower rises through the headline → wordmark ---------- */
+.heroseq{position:relative; height:300vh}
+.heroseq-pin{position:sticky; top:0; height:100vh; min-height:640px; overflow:hidden; background:#BFD6EC}
+.heroseq-pin video{position:absolute; inset:0; width:100%; height:100%; object-fit:cover}
+.heroseq-pin .veil{position:absolute; inset:0; z-index:1; pointer-events:none;
+  background:radial-gradient(ellipse 62% 44% at 50% 44%, rgba(255,255,255,.62), rgba(255,255,255,.20) 58%, rgba(255,255,255,0) 82%)}
+.hero-in{
+  position:absolute; inset:0; z-index:2;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  text-align:center; padding:0 20px; will-change:transform,opacity;
+}
+.hero-in h1{font-size:clamp(46px,7.4vw,110px); font-weight:700; letter-spacing:-.028em; line-height:1.0; margin:0; text-wrap:balance; max-width:14ch}
+.hero-in .sub{font-size:clamp(15px,1.45vw,19px); margin:22px 0 0; color:#3E4046; max-width:58ch; line-height:1.5}
+.hero-in .sub b{font-weight:600; color:var(--ink)}
+.hero-in .pill{margin-top:34px; pointer-events:auto}
+.rise-tower{
+  position:absolute; left:50%; top:100%; z-index:3; width:min(54vw,600px);
+  transform:translateX(-50%); transform-origin:50% 0; will-change:transform;
+  border-radius:18px 18px 0 0; overflow:hidden;
+  box-shadow:0 -30px 80px -30px rgba(30,60,100,.35);
+}
+.rise-tower img{width:100%; height:auto}
+.rise-word{position:absolute; inset:0; z-index:4; display:grid; place-items:center; pointer-events:none; opacity:0}
+.rise-word .big{
+  font-weight:700; font-size:clamp(120px,26vw,400px); letter-spacing:-.02em; line-height:.9;
+  color:transparent; -webkit-text-stroke:1.6px rgba(255,255,255,.95); text-align:center;
+  filter:drop-shadow(0 2px 22px rgba(10,30,60,.28));
+}
+.rise-word .small{text-align:center; font-size:clamp(18px,3.4vw,44px); font-weight:500; letter-spacing:-.03em; color:rgba(255,255,255,.88); margin-top:-8px; text-shadow:0 2px 18px rgba(10,30,60,.35)}
+.rise-fog{position:absolute; inset:auto 0 0 0; height:38%; z-index:5; pointer-events:none; opacity:0;
+  background:linear-gradient(180deg, transparent, #FFFFFF 82%); will-change:opacity}
+
+/* scroll-linked text fill (FIND-style manifesto) */
+.mani .w{color:var(--dim); transition:color .18s linear}
+.mani .w.lit{color:var(--ink)}
+.mani .w.half{color:#43454B}
+
+/* film panel scroll scale-in */
+.film{will-change:transform; transform:scale(.94); transition:none}
+
+/* closing scale-in */
+.close-sec h2{will-change:transform,opacity}
+
+/* ---------- film panel ---------- */
+.why-grid{display:grid; grid-template-columns:1.05fr .95fr; gap:clamp(28px,4vw,64px); align-items:end; margin-bottom:clamp(36px,6vh,64px)}
+@media (max-width:900px){ .why-grid{grid-template-columns:1fr} }
+.film{position:relative; border-radius:22px; overflow:hidden; aspect-ratio:1290/720; background:var(--soft)}
+.film video{position:absolute; inset:0; width:100%; height:100%; object-fit:cover}
+.film .film-cap{
+  position:absolute; left:18px; bottom:16px; z-index:2;
+  font-size:12px; font-weight:600; letter-spacing:.02em;
+  background:rgba(10,10,12,.55); color:#fff; backdrop-filter:blur(8px);
+  padding:7px 13px; border-radius:999px;
+}
+
+/* manifesto */
+.mani{font-size:clamp(26px,3.1vw,44px); font-weight:500; letter-spacing:-.035em; line-height:1.18; max-width:26ch; margin:0; text-wrap:balance}
+.mani .dim{color:var(--dim)}
+
+/* rewired steps */
+.rew{display:grid; grid-template-columns:1fr 1fr; gap:clamp(30px,5vw,80px); align-items:start}
+@media (max-width:900px){ .rew{grid-template-columns:1fr} }
+.rew h2.h{font-size:clamp(40px,4.6vw,66px)}
+.rew .pill{margin-top:30px}
+.steps{display:flex; flex-direction:column}
+.step{padding:clamp(20px,3vh,30px) 0; border-top:1px solid var(--line); display:grid; grid-template-columns:52px 1fr; gap:16px; align-items:baseline}
+.step:last-child{border-bottom:1px solid var(--line)}
+.step .n{font-size:14px; font-weight:600; color:var(--dim); font-variant-numeric:tabular-nums}
+.step h3{font-size:clamp(19px,1.8vw,24px); font-weight:600; letter-spacing:-.02em; margin:0 0 6px}
+.step p{font-size:15.5px; line-height:1.55; color:var(--dim); margin:0; max-width:48ch}
+
+/* principal dark band */
+.principal{background:var(--dark); color:var(--dark-fg)}
+.principal .label{color:var(--dark-fg)}
+.pri-grid{display:grid; grid-template-columns:minmax(0,340px) 1fr; gap:clamp(30px,5vw,76px); align-items:center}
+@media (max-width:900px){ .pri-grid{grid-template-columns:1fr} .pri-photo{max-width:300px} }
+.pri-photo{aspect-ratio:798/1150; border-radius:18px; background-image:var(--portrait);
+  background-size:cover; background-position:50% 8%; box-shadow:0 40px 90px -40px rgba(0,0,0,.8)}
+.pri-body h2.h{color:var(--dark-fg)}
+.pri-body .role{font-size:14px; font-weight:600; color:#C8CACF; margin:14px 0 22px}
+.pri-body p{font-size:16px; line-height:1.62; color:var(--dark-dim); margin:0 0 16px; max-width:60ch}
+.pri-body p b{color:var(--dark-fg); font-weight:600}
+.pri-links{display:flex; flex-wrap:wrap; gap:12px; margin-top:26px}
+.pri-links .pill.ghost{color:var(--dark-fg); border-color:rgba(245,245,243,.4)}
+.pri-links .pill.ghost:hover{border-color:var(--dark-fg)}
+
+/* case studies */
+.cases-head{display:flex; flex-wrap:wrap; gap:18px 32px; align-items:end; justify-content:space-between; margin-bottom:clamp(30px,5vh,50px)}
+.cs-track{display:flex; gap:18px; overflow-x:auto; scroll-snap-type:x mandatory; padding:4px 4px 22px; margin:0 -4px; scrollbar-width:thin}
+.cs-card{
+  flex:0 0 min(88vw,400px); scroll-snap-align:start;
+  background:var(--soft); border-radius:20px; overflow:hidden;
+  display:flex; flex-direction:column;
+  transition:transform .3s cubic-bezier(.2,.7,.3,1);
+}
+.cs-card:hover{transform:translateY(-4px)}
+.cs-card .thumb{aspect-ratio:16/9; overflow:hidden}
+.cs-card .thumb img{width:100%; height:100%; object-fit:cover; transition:transform .6s cubic-bezier(.2,.7,.3,1)}
+.cs-card:hover .thumb img{transform:scale(1.045)}
+.cs-body{padding:clamp(20px,2.2vw,28px); display:flex; flex-direction:column; gap:12px; flex:1}
+.cs-card .tag{align-self:flex-start; font-size:12px; font-weight:600; letter-spacing:.03em; color:var(--ink);
+  border:1px solid var(--line); background:var(--bg); padding:6px 12px; border-radius:999px}
+.cs-card h3{font-size:clamp(18px,1.8vw,22px); font-weight:600; letter-spacing:-.025em; line-height:1.18; margin:0}
+.cs-card p{font-size:14px; line-height:1.58; color:var(--dim); margin:0}
+.cs-card .num{margin-top:auto; font-size:24px; font-weight:700; letter-spacing:-.03em; padding-top:8px}
+.cs-note{font-size:12.5px; color:var(--dim); margin-top:8px}
+
+/* solutions rows */
+.sol-intro{max-width:56ch; margin-bottom:clamp(34px,5vh,56px)}
+.sol{border-top:1px solid var(--line)}
+.sol-row{display:grid; grid-template-columns:1fr minmax(0,44ch); gap:clamp(20px,4vw,70px);
+  padding:clamp(30px,4.5vh,48px) 0; border-bottom:1px solid var(--line); align-items:center;
+  text-decoration:none; transition:background .3s ease}
+.sol-row:hover{background:rgba(244,245,247,.55)}
+@media (max-width:900px){ .sol-row{grid-template-columns:1fr; gap:14px} }
+.sol-row .big{font-size:clamp(38px,5vw,72px); font-weight:600; letter-spacing:-.045em; line-height:1; margin:0; transition:color .3s}
+.sol-row p{font-size:15.5px; line-height:1.6; color:var(--dim); margin:0}
+.sol-row p b{color:var(--ink); font-weight:600}
+.sol-cta{display:flex; flex-wrap:wrap; gap:16px 28px; align-items:center; margin-top:clamp(30px,5vh,46px)}
+.sol-cta span{font-size:15.5px; color:var(--dim); max-width:44ch}
+
+/* beyond cards */
+.bey-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(270px,1fr)); gap:18px; margin-top:clamp(30px,5vh,48px)}
+.bey-card{background:var(--soft); border-radius:20px; overflow:hidden; display:flex; flex-direction:column;
+  transition:transform .3s cubic-bezier(.2,.7,.3,1)}
+.bey-card:hover{transform:translateY(-4px)}
+.bey-card .thumb{aspect-ratio:16/9; overflow:hidden}
+.bey-card .thumb img{width:100%; height:100%; object-fit:cover; transition:transform .6s cubic-bezier(.2,.7,.3,1)}
+.bey-card:hover .thumb img{transform:scale(1.045)}
+.bey-body{padding:clamp(20px,2.2vw,28px); display:flex; flex-direction:column; gap:10px; flex:1}
+.bey-card h3{font-size:clamp(18px,1.8vw,22px); font-weight:600; letter-spacing:-.025em; margin:0; line-height:1.2}
+.bey-card p{font-size:14px; line-height:1.58; color:var(--dim); margin:0}
+.bey-card .lm{margin-top:auto; padding-top:8px; font-size:14.5px; font-weight:600; text-decoration:none; display:inline-flex; gap:8px; align-items:center}
+.bey-card .lm .arr{transition:transform .25s}
+.bey-card:hover .lm .arr{transform:translateX(3px)}
+
+/* blog list */
+.blog-head{display:flex; flex-wrap:wrap; gap:18px 32px; align-items:end; justify-content:space-between; margin-bottom:clamp(28px,4.5vh,46px)}
+.blog-list{border-top:1px solid var(--line)}
+.post-row{display:grid; grid-template-columns:110px 1fr auto; gap:clamp(16px,3vw,44px);
+  padding:clamp(22px,3.4vh,34px) 0; border-bottom:1px solid var(--line); align-items:baseline;
+  text-decoration:none; transition:background .25s}
+.post-row:hover{background:rgba(244,245,247,.55)}
+.post-row time{font-size:13px; color:var(--dim); font-variant-numeric:tabular-nums}
+.post-row h3{font-size:clamp(19px,2vw,26px); font-weight:600; letter-spacing:-.025em; margin:0 0 6px; line-height:1.2}
+.post-row p{font-size:14.5px; line-height:1.55; color:var(--dim); margin:0; max-width:64ch}
+.post-row .arr{font-weight:600; transition:transform .25s}
+.post-row:hover .arr{transform:translateX(4px)}
+@media (max-width:720px){ .post-row{grid-template-columns:1fr} .post-row .arr{display:none} }
+
+/* closing */
+.close-sec{text-align:center; padding:clamp(100px,17vh,190px) 0}
+.close-sec h2{font-size:clamp(40px,6vw,88px); font-weight:700; letter-spacing:-.035em; line-height:1.02; margin:0 0 30px; text-wrap:balance}
+
+/* enquiry + footer */
+.contact-band{background:var(--soft); border-radius:26px; padding:clamp(30px,4.5vw,60px);
+  display:grid; grid-template-columns:1fr 1fr; gap:clamp(30px,4.5vw,70px)}
+@media (max-width:900px){ .contact-band{grid-template-columns:1fr} }
+.contact-band h3{font-size:clamp(24px,2.5vw,34px); font-weight:600; letter-spacing:-.03em; margin:0 0 10px}
+.contact-band .note{font-size:13px; color:var(--dim); margin:14px 0 0}
+.f-form{display:grid; grid-template-columns:1fr 1fr; gap:12px} @media(max-width:600px){.f-form{grid-template-columns:1fr} .f-form .full{grid-column:1} .contact-band{border-radius:16px; padding:clamp(20px,4vw,40px)} .f-form textarea{min-height:90px}}
+.f-form input{appearance:none; border:1px solid var(--line); background:var(--bg);
+  font:inherit; font-size:15px; color:var(--ink); padding:14px 16px; border-radius:12px; transition:border-color .2s}
+.f-form input::placeholder{color:var(--dim)}
+.f-form input:focus{outline:none; border-color:var(--ink)}
+.f-form .full{grid-column:1/-1}
+.f-form .pill{grid-column:1/-1; justify-content:center; margin-top:6px}
+.c-info{display:flex; flex-direction:column; gap:20px}
+.c-info .blk h4{font-size:12.5px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--dim); margin:0 0 8px}
+.c-info .blk p,.c-info .blk a{font-size:15.5px; line-height:1.65; margin:0; text-decoration:none}
+.footer{padding:clamp(40px,6vh,64px) 0 60px}
+.foot-row{display:flex; flex-wrap:wrap; gap:14px 30px; justify-content:space-between; align-items:center; border-top:1px solid var(--line); padding-top:28px}
+.foot-row .fine{font-size:13px; color:var(--dim)}
+.foot-row .links{display:flex; flex-wrap:wrap; gap:20px}
+.foot-row .links a{font-size:13.5px; font-weight:500; text-decoration:none; color:var(--dim)}
+.foot-row .links a:hover{color:var(--ink)}
+
+/* ---------- inner-page header ---------- */
+.page-head{padding:clamp(150px,22vh,220px) 0 clamp(40px,6vh,70px)}
+.page-head h1{font-size:clamp(42px,5.6vw,84px); font-weight:700; letter-spacing:-.035em; line-height:1.0; margin:0; text-wrap:balance}
+.page-head .lede{max-width:60ch}
+
+/* solutions detail */
+.svc{border-top:1px solid var(--line); padding:clamp(30px,4.5vh,48px) 0; display:grid; grid-template-columns:minmax(0,30ch) 1fr; gap:clamp(20px,4vw,64px)}
+.svc:last-of-type{border-bottom:1px solid var(--line)}
+@media (max-width:900px){ .svc{grid-template-columns:1fr; gap:12px} }
+.svc h2{font-size:clamp(24px,2.6vw,34px); font-weight:600; letter-spacing:-.03em; margin:0; line-height:1.15}
+.svc .kicker-num{display:none}
+.svc-items{display:flex; flex-direction:column}
+.svc-item{padding:16px 0; border-top:1px dashed var(--line)}
+.svc-item:first-child{border-top:0; padding-top:0}
+.svc-item h3{font-size:16.5px; font-weight:600; letter-spacing:-.015em; margin:0 0 5px}
+.svc-item p{font-size:14.5px; line-height:1.6; color:var(--dim); margin:0; max-width:66ch}
+.svc > p{font-size:15.5px; line-height:1.65; color:var(--dim); margin:0; max-width:66ch}
+.svc > p b{color:var(--ink); font-weight:600}
+
+/* case studies page grid */
+.case-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:20px}
+.case-big{background:var(--soft); border-radius:22px; overflow:hidden; display:flex; flex-direction:column;
+  transition:transform .3s cubic-bezier(.2,.7,.3,1)}
+.case-big:hover{transform:translateY(-4px)}
+.case-big .thumb{aspect-ratio:16/9; overflow:hidden}
+.case-big .thumb img{width:100%; height:100%; object-fit:cover; transition:transform .6s cubic-bezier(.2,.7,.3,1)}
+.case-big:hover .thumb img{transform:scale(1.04)}
+.case-big .body{padding:clamp(22px,2.4vw,32px); display:flex; flex-direction:column; gap:12px; flex:1}
+.case-big .tag{align-self:flex-start; font-size:12px; font-weight:600; letter-spacing:.03em; border:1px solid var(--line); background:var(--bg); padding:6px 12px; border-radius:999px}
+.case-big h3{font-size:clamp(19px,1.9vw,24px); font-weight:600; letter-spacing:-.025em; line-height:1.18; margin:0}
+.case-big p{font-size:14.5px; line-height:1.6; color:var(--dim); margin:0}
+.case-big .num{margin-top:auto; padding-top:8px; font-size:26px; font-weight:700; letter-spacing:-.03em}
+
+/* blog article */
+.article{max-width:760px; margin:0 auto}
+.article .meta{display:flex; gap:14px; align-items:center; font-size:14px; color:var(--dim); margin:18px 0 0}
+.article .meta b{color:var(--ink); font-weight:600}
+.article-hero{border-radius:22px; overflow:hidden; margin:clamp(28px,4.5vh,44px) 0}
+.article-hero img{width:100%; height:auto}
+.prose p{font-size:17px; line-height:1.72; color:#3E4046; margin:0 0 22px}
+.prose h2{font-size:clamp(22px,2.2vw,28px); font-weight:600; letter-spacing:-.025em; margin:36px 0 14px}
+.prose p b{color:var(--ink)}
+.back-link{display:inline-flex; gap:8px; align-items:center; font-size:14.5px; font-weight:600; text-decoration:none; margin-bottom:8px}
+
+/* about */
+.quote{font-size:clamp(24px,2.8vw,40px); font-weight:500; letter-spacing:-.03em; line-height:1.25; max-width:30ch; margin:0; text-wrap:balance}
+.quote .dim{color:var(--dim)}
+.chips{display:flex; flex-wrap:wrap; gap:8px; margin-top:22px}
+.chip{font-size:13px; font-weight:500; border:1px solid var(--line); border-radius:999px; padding:8px 15px; background:var(--bg)}
+.about-imgs{display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:clamp(30px,5vh,48px)}
+@media (max-width:720px){ .about-imgs{grid-template-columns:1fr} }
+.about-imgs figure{margin:0; border-radius:20px; overflow:hidden; position:relative}
+.about-imgs img{width:100%; height:100%; object-fit:cover; aspect-ratio:3/2}
+.about-imgs figcaption{position:absolute; left:16px; bottom:14px; font-size:12px; font-weight:600;
+  background:rgba(10,10,12,.55); color:#fff; backdrop-filter:blur(8px); padding:7px 13px; border-radius:999px}
+
+@media (prefers-reduced-motion: reduce){
+  .js .rv{opacity:1 !important; transform:none !important; transition:none !important}
+  *{animation-duration:.001ms !important; transition-duration:.001ms !important}
+}
+:root{--portrait:url("assets/portrait.jpg")}
+
+/* Mobile hamburger menu */
+.ham-btn{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;background:none;border:none;z-index:1001}
+.ham-btn span{display:block;width:22px;height:2px;background:var(--ink);border-radius:2px;transition:all .3s ease}
+.ham-btn.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.ham-btn.open span:nth-child(2){opacity:0}
+.ham-btn.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mob-menu{display:none;position:fixed;inset:0;z-index:1000;background:var(--bg);flex-direction:column;justify-content:center;align-items:center;gap:32px;padding:80px 20px 40px}
+.mob-menu.open{display:flex}
+.mob-menu a{font-size:clamp(22px,5vw,32px);font-weight:600;letter-spacing:-.02em;text-decoration:none;color:var(--ink);opacity:.85;transition:opacity .2s}
+.mob-menu a:hover{opacity:1}
+.mob-menu .pill{font-size:16px;margin-top:16px}
+@media (max-width:900px){.ham-btn{display:flex}.nav-links{display:none !important}}
+</style> <header class="nav" data-build="MVM-0921-A-db879cb8-2026-09-02" id="nav"><a class="mark" href="#/">MVM<span>&hairsp;Capital</span></a><nav class="nav-links" aria-label="Primary"><a href="#/solutions" data-nav="solutions">Solutions</a><a href="#/case-studies" data-nav="case-studies">Case Studies</a><a href="#/blog" data-nav="blog">Blog</a><a href="#/about" data-nav="about">About</a><a href="tech/index.html">MVM Tech</a></nav><a class="pill cta" href="#/contact">Enquire <span class="arr">→</span></a><button class="ham-btn" id="hamBtn" aria-label="Menu" onclick="var m=document.getElementById('mobMenu');var b=document.getElementById('hamBtn');m.classList.toggle('open');b.classList.toggle('open');document.body.style.overflow=m.classList.contains('open')?'hidden':''"><span></span><span></span><span></span></button></header><main id="app"></main><template id="t-shared"><section class="sec" id="enquire" style="padding-top:0"><div class="wrap"><div class="contact-band rv"><div><h3>Enquiry</h3><p class="lede" style="margin:0 0 22px; font-size:15px">Tell us where your capital or asset stands — we&rsquo;ll come back with a view.</p><form class="f-form" data-enquiry action="https://formspree.io/f/mwlpknwl" method="POST"><input type="text" name="name" placeholder="Name" required autocomplete="name"><input type="tel" name="contact" placeholder="Contact" required autocomplete="tel"><input type="text" name="company" placeholder="Company Name *" required autocomplete="organization"><input class="full" type="email" name="email" placeholder="Email *" required autocomplete="email"><textarea class="full" name="message" placeholder="Your enquiry *" required style="appearance:none;border:1px solid var(--line);background:var(--bg);font:inherit;font-size:15px;color:var(--ink);padding:14px 16px;border-radius:12px;transition:border-color .2s;resize:vertical;min-height:110px;grid-column:1/-1"></textarea><button class="pill" type="button" data-send>Send Enquiry <span class="arr">→</span></button></form></div><div class="c-info"><div class="blk"><h4>Contact</h4><p><a href="tel:+919555966546">+91 95559 66546</a><br><a href="tel:+971527160077">+971 52 716 0077</a><br><a href="tel:+971524385135">+971 52 438 5135</a><br><a href="mailto:info@mvmcapitals.in">info@mvmcapitals.in</a></p></div><div class="blk"><h4>Offices</h4><p>Dubai, United Arab Emirates<br>DLF Phase 1, Gurugram, Haryana, India</p></div><div class="blk"><h4>Our Presence</h4><p>UAE &amp; India — engagements delivered across 16 countries.<br><b>Headquartered in India, for the world.</b></p></div></div></div></div></section><footer class="footer"><div class="wrap"><div class="foot-row"><span class="fine">© 2026 MVM Capital Advisors · mvmcapitals.in</span><nav class="links" aria-label="Footer"><a href="https://www.linkedin.com/in/madhurmalhotra">LinkedIn</a><a href="https://www.instagram.com/mvmcapitals">Instagram — @mvmcapitals</a><a href="tech/index.html">MVM Tech</a><a href="#/" data-top>Back to Top ↑</a></nav></div></div></footer></template><template id="t-home"><section class="heroseq"><div class="heroseq-pin"><video src="assets/hero.mp4" autoplay muted loop playsinline></video><div class="veil"></div><div class="hero-in"><h1>Where capital meets<br>intelligent Advisors.</h1><p class="sub">Expert advisers. <b>Real partnerships.</b> A clear path for capital across the UAE, UK, and India.</p><a class="pill" href="#/solutions">Explore Our Solutions <span class="arr">→</span></a></div><div class="rise-tower" aria-hidden="true"><img src="assets/tower.jpg" alt=""></div><div class="rise-word"><div><div class="big">MVM</div><div class="small">Capital Advisors</div></div></div><div class="rise-fog"></div></div></section><section class="sec"><div class="wrap"><p class="label rv">Why MVM</p><div class="why-grid"><h2 class="h rv">Your capital&rsquo;s moving. Don&rsquo;t just find a deal — <span class="ghosted">find alignment.</span></h2><p class="lede rv">We help real estate and investment stakeholders move forward with clarity, confidence, and the right structure at their side — across the <b>UAE, UK, and India</b>.</p></div><div class="film rv"><video src="assets/film.mp4" muted loop playsinline preload="metadata"></video></div></div></section><section class="sec" style="padding-top:0"><div class="wrap"><p class="mani rv">This isn&rsquo;t just about real estate. <span class="dim">It&rsquo;s about bridging global capital with local opportunity — turning ambitious</span> real estate and investment goals <span class="dim">into successful outcomes.</span></p></div></section><section class="sec"><div class="wrap rew"><div><h2 class="h rv">Advisory,<br>Rewired.</h2><a class="pill rv" href="#/contact">Start Your Enquiry <span class="arr">→</span></a></div><div class="steps rv"><div class="step"><span class="n">01</span><div><h3>Talk to a Real Adviser.</h3><p>One desk across risk, capital, technology and transactions — no translating between four different firms.</p></div></div><div class="step"><span class="n">02</span><div><h3>Get Clarity.</h3><p>Feasibility, diligence and structure defined before any capital commits — not after.</p></div></div><div class="step"><span class="n">03</span><div><h3>Move Forward.</h3><p>We match the partners, structure the deal, and stay with you after it closes.</p></div></div></div></div></section><section class="sec principal"><div class="wrap"><p class="label rv">The Principal</p><div class="pri-grid"><div class="pri-photo rv"></div><div class="pri-body"><h2 class="h rv">Madhur Malhotra</h2><p class="role rv">Director — Dubai · Gurugram</p><p class="rv"><b>A consulting professional with over 10 years of advisory experience</b> across Real Estate, Telecom Media &amp; Technology, Fintech, Energy, F&amp;B, and Healthcare — with hands-on delivery of large-scale projects.</p><p class="rv">He has independently built a cross-border advisory practice serving the UAE, the United Kingdom, and India, delivering solutions across a range of domains.</p><p class="rv">Shaped by his years within the Big&nbsp;4 ecosystem, he places strong emphasis on client experience and satisfaction — delivered through an entrepreneurial, innovative approach to every engagement.</p><div class="pri-links rv"><a class="pill ghost" href="https://www.linkedin.com/in/madhurmalhotra">LinkedIn <span class="arr">→</span></a><a class="pill ghost" href="https://www.instagram.com/mvmcapitals">@mvmcapitals <span class="arr">→</span></a></div></div></div></div></section><section class="sec"><div class="wrap"><div class="cases-head"><div><p class="label rv">Select Case Studies</p><h2 class="h rv">The Work Speaks Instead.</h2></div><a class="pill ghost rv" href="#/case-studies">All Case Studies <span class="arr">→</span></a></div><div class="cs-track rv" tabindex="0" aria-label="Case studies — scroll horizontally"><article class="cs-card"><div class="thumb"><img src="assets/cranes.jpg" alt="Construction cranes against a blue sky" loading="lazy"></div><div class="cs-body"><span class="tag">Infrastructure Financing · UAE</span><h3>USD 380M of fund interest, structured to mandate.</h3><p>Strong interest from an international fund for a USD 380 million infrastructure financing raise — aligned with both the developer&rsquo;s growth plans and the fund&rsquo;s mandate.</p><span class="num">$380M</span></div></article><article class="cs-card"><div class="thumb"><img src="assets/dubai-marina.jpg" alt="Dubai skyline across the marina" loading="lazy"></div><div class="cs-body"><span class="tag">Debt Financing · UAE</span><h3>AIF interest for a USD 10M debt round.</h3><p>Successful interest from an Alternative Investment Fund for a USD 10 million debt financing round — structured for competitive terms and a strong strategic fit.</p><span class="num">$10M</span></div></article><article class="cs-card"><div class="thumb"><img src="assets/goa-coast.jpg" alt="Aerial view of the Goa coastline" loading="lazy"></div><div class="cs-body"><span class="tag">Joint Venture · Goa, India</span><h3>Developer and landowner, aligned on 15 ultra-luxury apartments.</h3><p>A successful joint venture structured between a developer and a landowner to develop 15 ultra-luxury apartments — unlocking the land&rsquo;s full potential.</p><span class="num">15 units</span></div></article><article class="cs-card"><div class="thumb"><img src="assets/hotel-courtyard.jpg" alt="Palm-lined hotel courtyard with fountain" loading="lazy"></div><div class="cs-body"><span class="tag">Transaction · Hotel Residences</span><h3>A fixed ~9–10% annual return, built into the deal.</h3><p>The successful sale of a hotel residences development, structured to deliver the new owner a fixed annual return of approximately 9–10%.</p><span class="num">9–10% p.a.</span></div></article><article class="cs-card"><div class="thumb"><img src="assets/warehouse.jpg" alt="Warehouse aisle with racked inventory" loading="lazy"></div><div class="cs-body"><span class="tag">Site Strategy · E-commerce</span><h3>Dark stores placed where the orders are.</h3><p>Strategic dark store locations identified for a leading e-commerce platform — enabling faster, more reliable grocery fulfilment across key catchments.</p><span class="num">Last-mile</span></div></article><article class="cs-card"><div class="thumb"><img src="assets/ai-network.jpg" alt="Abstract network graphic" loading="lazy"></div><div class="cs-body"><span class="tag">AI Operations · India</span><h3>Policies and processes, run by an AI agent.</h3><p>Policies, procedures, and processes developed for a real estate developer in India — designed for minimal human intervention and run by an AI agent.</p><span class="num">AI-run</span></div></article><article class="cs-card"><div class="thumb"><img src="assets/infinity-pool.jpg" alt="Infinity pool edge meeting a city skyline" loading="lazy"></div><div class="cs-body"><span class="tag">Fit-Out · Dubai Hills</span><h3>A sunken pool, landscaping, and outdoor living — delivered.</h3><p>The right partner matched for a premium sunken pool installation, with comprehensive landscaping and custom outdoor seating areas in Dubai Hills.</p><span class="num">Dubai Hills</span></div></article></div><p class="cs-note rv">*Client names have been withheld in line with confidentiality clauses / NDAs.</p></div></section><section class="sec" style="padding-top:0"><div class="wrap"><p class="label rv">Solutions</p><div class="sol-intro"><h2 class="h rv">How MVM Can Help You</h2><p class="lede rv">Four lines of work, held by one practice — so the answers agree with each other.</p></div><div class="sol rv"><a class="sol-row" href="#/solutions"><h3 class="big">Real Estate</h3><p><b>Buy, sell, lease and build smarter.</b> Joint ventures, land feasibility, branded residences, underwriting alignment, and transactions across residential, commercial and retail.</p></a><a class="sol-row" href="#/solutions"><h3 class="big">Financing</h3><p><b>Capital, structured to the scheme.</b> Fundraising and infrastructure financing with AIFs, NBFCs, sovereign funds, and fundraising platforms as key partners.</p></a><a class="sol-row" href="#/solutions"><h3 class="big">Risk</h3><p><b>Governance that survives diligence.</b> GRC solutions — internal audits, process and policy design, and Internal Financial Controls testing.</p></a><a class="sol-row" href="tech/index.html"><h3 class="big">Technology</h3><p><b>AI-driven solutions, built for the sector.</b> Explore the products and platforms we&rsquo;re building at MVM Tech.</p></a></div><div class="sol-cta rv"><a class="pill" href="#/solutions">See All Solutions <span class="arr">→</span></a><span>Certified expertise, cross-border reach, and reliable support at every stage.</span></div></div></section><section class="sec" style="padding-top:0"><div class="wrap"><p class="label rv">Beyond</p><h2 class="h rv">Support Beyond <span class="ghosted">the Transaction</span></h2><p class="lede rv">The market never stands still — and neither do we. Our experts offer continued support beyond the deal, helping you maximise your investment.</p><div class="bey-grid rv"><article class="bey-card"><div class="thumb"><img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=900&q=80" alt="Branded luxury residence building" loading="lazy"></div><div class="bey-body"><h3>Branded Residences Collaborations</h3><p>Strategic alliances between developers and global brands to create branded residences and integrated lifestyle communities.</p><a class="lm" href="#/contact">Learn More <span class="arr">→</span></a></div></article><article class="bey-card"><div class="thumb"><img src="assets/marble.jpg" alt="Veined marble surface detail" loading="lazy"></div><div class="bey-body"><h3>Interior Fit-Out Solutions</h3><p>Marble, lighting, swimming pools, landscaping, and luxury interior and exterior enhancements — residential and commercial.</p><a class="lm" href="#/contact">Learn More <span class="arr">→</span></a></div></article><article class="bey-card"><div class="thumb"><img src="assets/office-court.jpg" alt="Glass office courtyard" loading="lazy"></div><div class="bey-body"><h3>Underwriting Solutions</h3><p>Aligning underwriters and developers — identifying suitable opportunities and enabling efficient deal matchmaking.</p><a class="lm" href="#/contact">Learn More <span class="arr">→</span></a></div></article></div></div></section><section class="sec" style="padding-top:0"><div class="wrap"><div class="blog-head"><div><p class="label rv">Blog &amp; Resources</p><h2 class="h rv">Insights, Written<br>from the Desk</h2></div><a class="pill ghost rv" href="#/blog">Visit Our Blog <span class="arr">→</span></a></div><div class="blog-list rv" data-home-blog></div></div></section><section class="close-sec"><div class="wrap"><h2 class="rv">Your Move. We&rsquo;ll Structure It.</h2><a class="pill rv" href="#/contact" style="font-size:16px; padding:16px 30px">Let&rsquo;s Get Started <span class="arr">→</span></a></div></section></template><template id="t-solutions"><section class="page-head"><div class="wrap"><p class="label rv">Our Advisory Solutions</p><h1 class="rv">Everything a Deal Needs, <span style="color:var(--dim)">Under One Desk.</span></h1><p class="lede rv">Structuring capital, building partnerships, and delivering value for real estate and investment stakeholders across the UAE, UK, and India.</p></div></section><section class="sec" style="padding-top:clamp(20px,4vh,40px)"><div class="wrap"><div class="svc rv"><h2>Real Estate<br>Advisory</h2><div class="svc-items"><div class="svc-item"><h3>Joint Venture Transactions</h3><p>Matchmaking landowners and developers for mutually beneficial partnerships.</p></div><div class="svc-item"><h3>Land Feasibility</h3><p>Feasibility assessments and advisory support for developers and builders evaluating land acquisitions and development opportunities.</p></div><div class="svc-item"><h3>Branded Residences Collaborations</h3><p>Enabling strategic alliances between developers and global brands to create branded residences and integrated lifestyle communities.</p></div><div class="svc-item"><h3>Interior Fit-Out Solutions</h3><p>Specialised services spanning marble, lighting, swimming pools, landscaping, and luxury interior/exterior enhancements for residential and commercial spaces.</p></div><div class="svc-item"><h3>Underwriting Solutions</h3><p>Facilitating alignment between underwriters and developers, identifying suitable opportunities and enabling efficient deal matchmaking.</p></div><div class="svc-item"><h3>Buy / Sell / Lease</h3><p>Residential (apartments, land, villas, townhouses, mansions), Commercial (hotels, office spaces), and Retail (dark stores, grocery stores, and more).</p></div></div></div><div class="svc rv"><h2>Fundraising &amp;<br>Infrastructure Financing</h2><div class="svc-items"><div class="svc-item"><h3>Capital Structuring</h3><p>Supporting real estate developers and landowners in structuring and securing capital through diverse financing avenues, with a focus on quality partnerships and strategic capital alignment. Key partners include AIFs, NBFCs, sovereign funds, and fundraising platforms.</p></div><div class="svc-item"><h3>Joint Development Agreements</h3><p>Supporting developers with financial backing through Joint Development Agreements with financial institutions — giving the developer the credibility and resources of a recognised brand name, enabling stronger project delivery and investor confidence.</p></div></div></div><div class="svc rv"><h2>Risk<br>Advisory</h2><p>Governance, Risk &amp; Compliance (GRC) solutions, including internal audits, and process and policy design, together with Internal Financial Controls testing — covering both <b>test of design</b> and <b>test of operating effectiveness</b>.</p></div><div class="svc rv"><h2>Tech &amp; Digital<br>Advisory</h2><p>We also work with clients on a range of technology and AI-driven solutions. <b>Visit <a href="tech/index.html" style="text-decoration:underline">MVM Tech</a> to explore the products and platforms we&rsquo;re building.</b></p></div><div class="sol-cta rv" style="margin-top:clamp(36px,6vh,56px)"><a class="pill" href="#/contact">Discuss Your Requirement <span class="arr">→</span></a><span>Alliance partners across the UAE, US, and UK.</span></div></div></section></template><template id="t-cases"><section class="page-head"><div class="wrap"><p class="label rv">Select Case Studies</p><h1 class="rv">The Work<br>Speaks Instead.</h1><p class="lede rv">Real engagements, real outcomes — delivered across the UAE and India.*</p></div></section><section class="sec" style="padding-top:clamp(20px,4vh,40px)"><div class="wrap"><div class="case-grid"><article class="case-big rv"><div class="thumb"><img src="assets/cranes.jpg" alt="Construction cranes against a blue sky" loading="lazy"></div><div class="body"><span class="tag">Infrastructure Financing · UAE</span><h3>Infrastructure Financing — UAE</h3><p>MVM Capital Advisors supported a⁠​‌​​‌‌​‌​‌​‌​‌‌​​‌​​‌‌​‌​​‌​‌‌​‌​​‌‌​​​​​​‌‌‌​​‌​​‌‌​​‌​​​‌‌​​​‌​​‌​‌‌​‌​‌​​​​​‌​‌‌‌‌‌​​​‌‌​​‌​​​‌‌​​​‌​​​‌‌‌​​​​​‌‌​‌‌‌​​‌‌‌​​‌​‌‌​​​‌‌​‌‌​​​‌​​​‌‌‌​​​⁠ UAE-based real estate developer in securing strong interest from an international fund for a USD 380 million infrastructure financing raise, structuring the opportunity to align with both the developer&rsquo;s growth plans and the fund&rsquo;s investment mandate.</p><span class="num">$380M</span></div></article><article class="case-big rv"><div class="thumb"><img src="assets/dubai-marina.jpg" alt="Dubai skyline across the marina" loading="lazy"></div><div class="body"><span class="tag">Debt Financing · UAE</span><h3>Debt Financing — UAE</h3><p>We supported a UAE real⁠​‌​​‌‌​‌​‌​‌​‌‌​​‌​​‌‌​‌​​‌​‌‌​‌​​‌‌​​​​​​‌‌‌​​‌​​‌‌​​‌​​​‌‌​​​‌​​‌​‌‌​‌​‌​​​​​‌​‌‌‌‌‌​​​‌‌​​‌​​​‌‌​​​‌​​​‌‌‌​​​​​‌‌​‌‌‌​​‌‌‌​​‌​‌‌​​​‌‌​‌‌​​​‌​​​‌‌‌​​​⁠ estate developer in generating successful interest from an Alternative Investment Fund (AIF) for a USD 10 million debt financing round, structuring the engagement to secure competitive terms and a strong strategic fit for the developer&rsquo;s capital needs.</p><span class="num">$10M</span></div></article><article class="case-big rv"><div class="thumb"><img src="assets/goa-coast.jpg" alt="Aerial view of the Goa coastline" loading="lazy"></div><div class="body"><span class="tag">Joint Venture · Goa, India</span><h3>Joint Venture Transaction — Goa</h3><p>In Goa, India, MVM Capital⁠​‌​​‌‌​‌​‌​‌​‌‌​​‌​​‌‌​‌​​‌​‌‌​‌​​‌‌​​​​​​‌‌‌​​‌​​‌‌​​‌​​​‌‌​​​‌​​‌​‌‌​‌​‌​​​​​‌​‌‌‌‌‌​​​‌‌​​‌​​​‌‌​​​‌​​​‌‌‌​​​​​‌‌​‌‌‌​​‌‌‌​​‌​‌‌​​​‌‌​‌‌​​​‌​​​‌‌‌​​​⁠ Advisors facilitated a successful joint venture between a developer and a landowner, structuring a partnership to develop 15 ultra-luxury apartments — aligning both parties&rsquo; interests to unlock the land&rsquo;s full potential.</p><span class="num">15 units</span></div></article><article class="case-big rv"><div class="thumb"><img src="assets/warehouse.jpg" alt="Warehouse aisle with racked inventory" loading="lazy"></div><div class="body"><span class="tag">Site Strategy · E-commerce</span><h3>Dark Store Site Identification</h3><p>MVM Capital Advisors identified strategic⁠​‌​​‌‌​‌​‌​‌​‌‌​​‌​​‌‌​‌​​‌​‌‌​‌​​‌‌​​​​​​‌‌‌​​‌​​‌‌​​‌​​​‌‌​​​‌​​‌​‌‌​‌​‌​​​​​‌​‌‌‌‌‌​​​‌‌​​‌​​​‌‌​​​‌​​​‌‌‌​​​​​‌‌​‌‌‌​​‌‌‌​​‌​‌‌​​​‌‌​‌‌​​​‌​​​‌‌‌​​​⁠ dark store locations for a leading e-commerce platform, enabling faster, more reliable fulfilment of grocery orders across key catchment areas and supporting the client&rsquo;s last-mile delivery expansion.</p><span class="num">Last-mile</span></div></article><article class="case-big rv"><div class="thumb"><img src="assets/hotel-courtyard.jpg" alt="Palm-lined hotel courtyard with fountain" loading="lazy"></div><div class="body"><span class="tag">Transaction · Hotel Residences</span><h3>Hotel Residences Transaction</h3><p>We supported the successful sale⁠​‌​​‌‌​‌​‌​‌​‌‌​​‌​​‌‌​‌​​‌​‌‌​‌​​‌‌​​​​​​‌‌‌​​‌​​‌‌​​‌​​​‌‌​​​‌​​‌​‌‌​‌​‌​​​​​‌​‌‌‌‌‌​​​‌‌​​‌​​​‌‌​​​‌​​​‌‌‌​​​​​‌‌​‌‌‌​​‌‌‌​​‌​‌‌​​​‌‌​‌‌​​​‌​​​‌‌‌​​​⁠ of a hotel residences development, structuring the transaction to deliver the new owner a fixed annual return of approximately 9–10% — combining strong asset selection with disciplined deal structuring.</p><span class="num">9–10% p.a.</span></div></article><article class="case-big rv"><div class="thumb"><img src="assets/ai-network.jpg" alt="Abstract network graphic" loading="lazy"></div><div class="body"><span class="tag">AI Operations · India</span><h3>AI-Run Policies &amp; Processes — India</h3><p>MVM Capital Advisors developed policies,⁠​‌​​‌‌​‌​‌​‌​‌‌​​‌​​‌‌​‌​​‌​‌‌​‌​​‌‌​​​​​​‌‌‌​​‌​​‌‌​​‌​​​‌‌​​​‌​​‌​‌‌​‌​‌​​​​​‌​‌‌‌‌‌​​​‌‌​​‌​​​‌‌​​​‌​​​‌‌‌​​​​​‌‌​‌‌‌​​‌‌‌​​‌​‌‌​​​‌‌​‌‌​​​‌​​​‌‌‌​​​⁠ procedures, and processes for a real estate developer in India, designed for minimal human intervention and run by an AI agent — improving consistency, compliance, and operational efficiency.</p><span class="num">AI-run</span></div></article><article class="case-big rv"><div class="thumb"><img src="assets/infinity-pool.jpg" alt="Infinity pool edge meeting a city skyline" loading="lazy"></div><div class="body"><span class="tag">Fit-Out · Dubai Hills</span><h3>Sunken Pool &amp; Landscaping — Dubai Hills</h3><p>In Dubai Hills, MVM Capital⁠​‌​​‌‌​‌​‌​‌​‌‌​​‌​​‌‌​‌​​‌​‌‌​‌​​‌‌​​​​​​‌‌‌​​‌​​‌‌​​‌​​​‌‌​​​‌​​‌​‌‌​‌​‌​​​​​‌​‌‌‌‌‌​​​‌‌​​‌​​​‌‌​​​‌​​​‌‌‌​​​​​‌‌​‌‌‌​​‌‌‌​​‌​‌‌​​​‌‌​‌‌​​​‌​​​‌‌‌​​​⁠ Advisors connected our client with the right partner for a premium sunken pool installation, complete with comprehensive landscaping and custom outdoor seating areas — elevating the property&rsquo;s outdoor living experience.</p><span class="num">Dubai Hills</span></div></article></div><p class="cs-note rv" style="margin-top:20px">*Client names have been withheld in line with confidentiality clauses / NDAs.</p></div></section></template><template id="t-blog"><section class="page-head"><div class="wrap"><p class="label rv">Blog &amp; Resources</p><h1 class="rv">Insights, Written<br>from the Desk.</h1><p class="lede rv">On real estate, financing, and technology — written by Madhur Malhotra.</p></div></section><section class="sec" style="padding-top:clamp(20px,4vh,40px)"><div class="wrap"><div class="blog-list rv" data-blog-index></div></div></section></template><template id="t-about"><section class="page-head"><div class="wrap"><p class="label rv">About Us</p><h1 class="rv">A Cross-Border Practice, <span style="color:var(--dim)">Built to Deliver.</span></h1><p class="lede rv">MVM Capital Advisors is a⁠​‌​​‌‌​‌​‌​‌​‌‌​​‌​​‌‌​‌​​‌​‌‌​‌​​‌‌​​​​​​‌‌‌​​‌​​‌‌​​‌​​​‌‌​​​‌​​‌​‌‌​‌​‌​​​​​‌​‌‌‌‌‌​​​‌‌​​‌​​​‌‌​​​‌​​​‌‌‌​​​​​‌‌​‌‌‌​​‌‌‌​​‌​‌‌​​​‌‌​‌‌​​​‌​​​‌‌‌​​​⁠ cross-border advisory practice with active clients across the US, UAE, UK, and India — focused on delivering diverse advisory solutions across Real Estate, Technology, Finance, and more.</p></div></section><section class="sec" style="padding-top:clamp(20px,4vh,40px)"><div class="wrap"><p class="quote rv">&ldquo;Our mission is to bridge global capital with local opportunity — <span class="dim">delivering trusted, innovative advisory solutions that turn ambitious real estate and investment goals into successful outcomes.</span>&rdquo;</p><div class="about-imgs rv"><figure><img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=900&q=80" alt="Burj Khalifa Dubai" loading="lazy"><figcaption>Dubai · UAE</figcaption></figure><figure><img src="https://images.unsplash.com/photo-1587474260584-136574528ed5?w=900&q=80" alt="Gurugram India cityscape" loading="lazy"><figcaption>Gurugram · India</figcaption></figure></div><div style="margin-top:clamp(36px,6vh,56px)"><p class="lede rv" style="margin:0"><b>We have alliance partners across the UAE, US, and UK.</b> Engagements delivered across:</p><div class="chips rv"><span class="chip">India</span><span class="chip">United Arab Emirates</span><span class="chip">United Kingdom</span><span class="chip">United States</span><span class="chip">South Africa</span><span class="chip">Saudi Arabia</span><span class="chip">Sweden</span><span class="chip">Norway</span><span class="chip">Eswatini</span><span class="chip">Italy</span><span class="chip">Kuwait</span><span class="chip">Myanmar</span><span class="chip">Cameroon</span><span class="chip">Singapore</span><span class="chip">Australia</span><span class="chip">Canada</span></div></div></div></section><section class="sec principal"><div class="wrap"><p class="label rv">About Me</p><div class="pri-grid"><div class="pri-photo rv"></div><div class="pri-body"><h2 class="h rv">Madhur Malhotra</h2><p class="role rv">Director — Dubai · Gurugram</p><p class="rv"><b>A consulting professional with over 10 years of advisory experience</b> across Real Estate, Telecom Media &amp; Technology, Fintech, Energy, F&amp;B, and Healthcare — with hands-on delivery of large-scale projects.</p><p class="rv">He has independently built a cross-border advisory practice serving the UAE, the United Kingdom, and India, delivering solutions across a range of domains.</p><p class="rv">Shaped by his years within the Big&nbsp;4 ecosystem, he places strong emphasis on client experience and satisfaction — delivered through an entrepreneurial, innovative approach to every engagement.</p><div class="pri-links rv"><a class="pill ghost" href="https://www.linkedin.com/in/madhurmalhotra">LinkedIn <span class="arr">→</span></a><a class="pill ghost" href="https://www.instagram.com/mvmcapitals">@mvmcapitals <span class="arr">→</span></a></div></div></div></div></section></template><template id="t-contact"><section class="page-head"><div class="wrap"><p class="label rv">Contact</p><h1 class="rv">Start a<br>Conversation.</h1><p class="lede rv">Two offices, four markets, one desk. Tell us what you&rsquo;re working on.</p></div></section></template> <script src="assets/a.a592a8fa.js" defer></script>
+
+
+<div class="mob-menu" id="mobMenu">
+  <div class="mob-top">
+    <span class="mob-brand">MVM<span style="font-weight:400">&hairsp;Capital</span></span>
+    <button class="mob-x" id="mobClose" aria-label="Close menu">&#10005;</button>
+  </div>
+  <div class="mob-links">
+    <a href="#/solutions">Solutions</a>
+    <a href="#/case-studies">Case Studies</a>
+    <a href="#/blog">Blog</a>
+    <a href="#/about">About</a>
+    <a href="tech/index.html">MVM Tech</a>
+    <a href="#/contact" class="mob-enquire">Enquire &rarr;</a>
+  </div>
+</div>
+<script>
+(function(){
+  var btn=document.getElementById('hamBtn');
+  var menu=document.getElementById('mobMenu');
+  var close=document.getElementById('mobClose');
+  function shut(){menu.classList.remove('open');if(btn)btn.classList.remove('open');document.body.style.overflow='';}
+  if(close)close.addEventListener('click',shut);
+  menu.querySelectorAll('.mob-links a').forEach(function(a){a.addEventListener('click',shut);});
+})();
+</script>
+<script>
+(function(){
+  function attach(btn){
+    if(btn._mvmDone)return;btn._mvmDone=true;
+    btn.addEventListener('click',async function(e){
+      e.preventDefault();e.stopImmediatePropagation();
+      var form=btn.closest('form');
+      if(!form)return;
+      if(form.reportValidity && !form.reportValidity())return;
+      var orig=btn.innerHTML;
+      btn.innerHTML='Sending...';btn.disabled=true;
+      try{
+        var res=await fetch('https://formspree.io/f/mwlpknwl',{method:'POST',body:new FormData(form),headers:{'Accept':'application/json'}});
+        if(res.ok){form.innerHTML='<p style="font-size:16px;font-weight:600;padding:20px 0;text-align:center">Thank you! We will be in touch shortly.</p>';}
+        else throw new Error();
+      }catch(err){
+        btn.innerHTML=orig;btn.disabled=false;
+        alert('Something went wrong. Please email mm@mvmcapitals.in directly.');
+      }
+    },true);
+  }
+  function scan(){document.querySelectorAll('button[data-send]').forEach(attach);}
+  new MutationObserver(scan).observe(document.documentElement,{childList:true,subtree:true});
+  scan();
+})();
+</script>

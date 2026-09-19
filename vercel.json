@@ -1,0 +1,15 @@
+{
+  "cleanUrls": false,
+  "rewrites": [
+    { "source": "/tech", "destination": "/tech/index.html" },
+    { "source": "/tech/", "destination": "/tech/index.html" }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" }
+      ]
+    }
+  ]
+}

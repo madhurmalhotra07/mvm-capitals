@@ -1,0 +1,9 @@
+[[redirects]]
+  from = "/tech"
+  to = "/tech/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/tech/"
+  to = "/tech/index.html"
+  status = 200
